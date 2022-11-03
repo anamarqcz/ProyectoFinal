@@ -1,19 +1,24 @@
 import {useState} from 'react'
 import Mensaje from './Mensaje'
-const NuevoPresupuesto = ({presupuesto, setPresupuesto}) => {
-    const [mensaje, setMensaje ]= useState('')
+const NuevoPresupuesto = ({presupuesto, setPresupuesto, PresupuestoValido, setPresupuestoValido}) => {//extraer los proops
+    const [mensaje, setMensaje ]= useState('') //useState local
 // validar presupuesto
 // cuando se de click en submit se ejecutará esta funcion
 const handlePresupuesto = (e)=>{
  e.preventDefault();
 // console.log('ènviando formulario')
-//console.log(Number(presupuesto))
-    if (!Number(presupuesto)|| Number (presupuesto) < 0){
+//validacion presupuesto
+    if (!presupuesto||presupuesto < 0){ //si no hay presupuesto o si es menor a cero
         setMensaje('No es un presupuesto valido')
-    } else {
-        console.log('Si es un presupuesto valido')
-    }
 
+        return
+    } 
+       // console.log('Si es un presupuesto valido')
+
+       setMensaje('')
+       setPresupuestoValido(true) //se asigna el presupuesto
+      // console.log(presupuesto)
+    
 }
 
 
@@ -27,11 +32,11 @@ const handlePresupuesto = (e)=>{
             <div className='campo'>
                 <label>Definir Presupuesto</label>
                 <input 
-                type='text' 
+                type='number' 
                 className='nuevo-presupuesto'
                 placeholder='Añadir Presupuesto'
                 value={presupuesto}
-                onChange ={(e) =>setPresupuesto(e.target.value)}
+                onChange ={(e) =>setPresupuesto(Number (e.target.value))} //Number para que se cconviertan a numeros y no sean strings
 
                 />
             </div>
